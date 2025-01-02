@@ -8,6 +8,7 @@ import { matchPath, useLocation, useNavigate } from "react-router-dom";
 import { ITab, tabs } from "./tabs";
 import LogoutIcon from "../../assets/Icons/LogoutIcon";
 import BackIcon from "../../assets/Icons/BackIcon";
+import { useAlert } from "../../hooks/useAlert";
 
 
 interface LayoutProps {
@@ -18,14 +19,14 @@ interface LayoutProps {
 const SharedLayout: FC<LayoutProps> = ({ title, children, back }) => {
   const navigate = useNavigate();
   const location = useLocation();
-
+  const { showAlert } = useAlert();
 
   return (
     <>
       <GlobalStyle />
       <Layout>
         <HorizontalNav >
-          <Typography variant='subtitlePrimary'>Moayed Mustafa</Typography>
+          <Typography variant='subtitlePrimary'>Moroccan Senior</Typography>
           <LogoutIcon />
         </HorizontalNav >
         <VerticalNav>
@@ -33,10 +34,17 @@ const SharedLayout: FC<LayoutProps> = ({ title, children, back }) => {
             <Logo />
           </NavItem>
           {tabs.map((tab: ITab) => {
-            const active = !!matchPath({ path: tab.path, end: false }, location.pathname)
+            const active = matchPath({ path: tab.path, end: tab.path === "/" }, location.pathname);
             return (
-              <NavItem active={active} onClick={() => navigate(tab.path)}>
-                <Icon svg={tab.icon} width={'44px'} height={'44px'} active={active} secondary={active} />
+              <NavItem key={tab.path} active={!!active} onClick={() => {
+                if (tab.path == "/edit") {
+                  showAlert("Edit a role to navigate here", 'info')
+                } else {
+                  navigate(tab.path)
+                }
+              }
+              }>
+                <Icon svg={tab.icon} width={'44px'} height={'44px'} active={!!active} secondary={!!active} animate={!!active} margin={active ? '0 0 0 4px' : 'auto'} />
               </NavItem>
             )
           })}
@@ -80,17 +88,58 @@ const Layout = styled.div`
     "main"
     "vertical-nav"
     }
-
 `
 const NavItem = styled.div<{ active?: boolean }>`
-  width: 100%;
+  width: ${({ active }) => (active ? '70%' : '100%')};
   display: flex;
   align-items: center;
-  justify-content:center;
+  justify-content:${({ active }) => (active ? 'start' : 'center')};;
   margin-left:auto;
   box-sizing: border-box;
   position: relative;
   cursor:pointer;
+  color: ${({ active }) => (active ? colors.errorRed : 'inherit')};
+  background: ${({ active }) => (active ? colors.white : 'transparent')};
+  padding: ${({ active }) => (active ? '4px 0px' : 'auto')};
+  border-top-left-radius: ${({ active }) => (active ? '999px' : '0')};
+  border-bottom-left-radius: ${({ active }) => (active ? '999px' : '0')};
+  font-weight: ${({ active }) => (active ? 600 : 'normal')};
+    ${({ active }) =>
+    active &&
+    `
+    &:before {
+      content: '';
+      display: block;
+      width: 22px;
+      height: 22px;
+      background: ${colors.primary};
+      position: absolute;
+      right: 0px;
+      top: -22px;
+      border-bottom-right-radius: 22px;
+      box-shadow: 9px 9px 0 9px ${colors.white};
+    }
+
+      &:after {
+      content: '';
+      display: block;
+      width: 22px;
+      height: 22px;
+      background: ${colors.primary};
+      position: absolute;
+      right: 0px;
+      top: 52px;
+      border-top-right-radius: 20px;
+      box-shadow: 9px -9px 0px 9px ${colors.white};
+    }
+
+        @media (max-width: 768px) {
+      &:before,
+      &:after {
+        display: none;
+      }
+    }
+  `}
 `;
 
 const VerticalNav = styled.div`

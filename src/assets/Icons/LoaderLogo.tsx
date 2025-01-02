@@ -12,8 +12,6 @@ const LoaderLogo = () => {
                 </clipPath>
             </defs>
         </svg>
-
     )
 }
-
 export default LoaderLogo

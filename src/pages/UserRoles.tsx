@@ -24,7 +24,6 @@ const UserRoles = () => {
         loading
     } = useUserRoles()
 
-
     return (
         <SharedLayout title="User Roles">
             {loading && <Loader />}

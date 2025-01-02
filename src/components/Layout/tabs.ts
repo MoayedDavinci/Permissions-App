@@ -13,37 +13,38 @@ export interface ITab {
 }
 export const tabs: ITab[] = [
     {
-        path: "/home",
+        path: "/",
         icon: DashboardIcon
     },
     {
         path: "/create",
         icon: LockIcon
     },
-
-    {
-        path: "/page3",
-        icon: CompanyIcon
-    },
-    {
-        path: "/page4",
-        icon: SassyIcon
-    },
-    {
-        path: "/page5",
-        icon: PaperIcon
-    },
-    {
-        path: "/page6",
-        icon: BatteryIcon
-    },
-    {
-        path: "/page7",
-        icon: CogIcon
-    },
     {
         path: "/edit",
         icon: UsersIcon
     },
+
+    {
+        path: "/page4",
+        icon: CompanyIcon
+    },
+    {
+        path: "/page5",
+        icon: SassyIcon
+    },
+    {
+        path: "/page6",
+        icon: PaperIcon
+    },
+    {
+        path: "/page7",
+        icon: BatteryIcon
+    },
+    {
+        path: "/page8",
+        icon: CogIcon
+    },
+
 
 ]

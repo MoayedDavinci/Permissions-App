@@ -7,7 +7,7 @@ interface RoleState {
     fetchRoles: (identifier: string) => Promise<void>;
     addRole: (identifier: string, role: Omit<Role, 'id'>) => Promise<void>;
     updateRole: (identifier: string, role: Role) => void;
-    deleteRole: (identifier: string, id: string) => Promise<void>;
+    deleteRole: (identifier: string, id: string) => Promise<{ message: string, success: boolean }>;
     loading: boolean;
 }
 
@@ -61,13 +61,17 @@ const useRoleStore = create<RoleState>((set) => ({
 
     },
 
-    deleteRole: async (identifier: string, id: string) => {
+    deleteRole: async (identifier: string, id: string): Promise<{ message: string, success: boolean }> => {
         try {
             const res = await deleteRole(identifier, id);
-            set((state) => ({ roles: state.roles.filter((r) => r.id !== id) }));
-            return res;
+            if (res.length > 0) {
+                set((state) => ({ roles: state.roles.filter((r) => r.id !== id) }));
+                return { message: res, success: true }
+            }
+            return { message: "Failed Deleting Role", success: false }
         } catch (error) {
             console.error('Error deleting role:', error);
+            return { message: "Failed Deleting Role", success: false }
         }
 
     },

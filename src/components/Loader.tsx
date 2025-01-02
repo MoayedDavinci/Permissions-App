@@ -4,15 +4,15 @@ import LoaderLogo from "../assets/Icons/LoaderLogo";
 
 const pulse = keyframes`
   0% {
-    transform: scale(1);
+    transform: scale(0.7);
     opacity: 1;
   }
   50% {
-    transform: scale(1.1);
+    transform: scale(1);
     opacity: 0.3;
   }
   100% {
-    transform: scale(1);
+    transform: scale(0.7);
     opacity: 1;
   }
 `;
@@ -27,11 +27,11 @@ const LoaderWrapper = styled.div`
 `;
 
 const Loader: React.FC = () => {
-    return (
-        <LoaderWrapper>
-            <LoaderLogo />
-        </LoaderWrapper>
-    );
+  return (
+    <LoaderWrapper>
+      <LoaderLogo />
+    </LoaderWrapper>
+  );
 };
 
 export default Loader;

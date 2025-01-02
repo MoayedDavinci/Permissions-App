@@ -8,9 +8,9 @@ import Typography from "./Typography";
 type AlertVariant = "success" | "info" | "danger";
 
 const variantColors = {
-    success: colors.primary,
-    info: colors.darkGreen,
-    danger: colors.errorRed,
+  success: colors.primary,
+  info: colors.darkGrey,
+  danger: colors.errorRed,
 };
 
 const AlertContainer = styled.div<{ variant: AlertVariant }>`
@@ -45,19 +45,19 @@ const AlertContainer = styled.div<{ variant: AlertVariant }>`
 
 
 interface AlertProps {
-    variant: AlertVariant;
-    children: React.ReactNode;
-    close: () => void
+  variant: AlertVariant;
+  children: React.ReactNode;
+  close: () => void
 }
 
 const Alert: React.FC<AlertProps> = ({ variant, children, close }) => {
-    return (
-        <AlertContainer variant={variant}>
-            <Typography variant="alert" >{children}</Typography>
-            <Icon onClick={() => close()} svg={CrossIcon} width={'20px'} height={'20px'} />
+  return (
+    <AlertContainer variant={variant}>
+      <Typography variant="alert" >{children}</Typography>
+      <Icon onClick={() => close()} svg={CrossIcon} width={'20px'} height={'20px'} />
 
-        </AlertContainer>
-    );
+    </AlertContainer>
+  );
 };
 
 export default Alert;

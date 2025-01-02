@@ -5,7 +5,7 @@ import { useUserRoles } from "./useUserRoles";
 
 const useRoleForm = (id?: any) => {
     const { roles } = useRoleStore()
-    const { handleRoleAdd, handleRoleEdit } = useUserRoles()
+    const { handleRoleAdd, handleRoleEdit, loading } = useUserRoles()
     const role = roles.find((role: Role) => role.id == id!)
 
     const [name, setName] = useState(role?.name || '');
@@ -40,8 +40,9 @@ const useRoleForm = (id?: any) => {
         handleRoleAdd({ name, permissions, roleIcon: selectedIcon, isCustom: true, id: '0' })
     }
 
-    const handleEditRole = () => {
-        handleRoleEdit({ name, permissions, roleIcon: selectedIcon, isCustom: true, id })
+    const handleEditRole = async () => {
+        const res = await handleRoleEdit({ name, permissions, roleIcon: selectedIcon, isCustom: true, id })
+        console.log({ res })
     }
 
 
@@ -54,7 +55,8 @@ const useRoleForm = (id?: any) => {
         name,
         error,
         selectedIcon,
-        permissions
+        permissions,
+        loading
     }
 }
 

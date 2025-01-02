@@ -21,7 +21,7 @@ export const useUserRoles = () => {
     const handleDeleteRole = async () => {
         if (selectedRole) {
             const res = await deleteRole(API_IDENTIFIER, selectedRole.id);
-            showAlert(res!, "success")
+            showAlert(res.message!, res.success ? 'success' : 'danger')
             handleCloseDialog();
         }
     };
